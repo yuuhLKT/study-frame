@@ -1,0 +1,16 @@
+{
+    "name": "yuri.luiz/lumen",
+    "description": "Mini-Laravel Framework for Study",
+    "autoload": {
+        "psr-4": {
+                "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yuri Luiz",
+            "email": "yuri.luizkt@gmail.com"
+        }
+    ],
+    "require": {}
+}
