@@ -8,6 +8,6 @@ use App\Core\Router;
 $router = new Router();
 
 $router->get("/", [HomeController::class, 'index']);
-echo "<br>";
-echo "<br>";
+
+
 $router->dispatch();

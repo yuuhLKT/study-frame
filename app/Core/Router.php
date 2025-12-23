@@ -1,22 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core;
 
-class Router
-{
+use App\Contracts\RouterInterface;
 
-    public static function get($uri, $action)
+class Router implements RouterInterface
+{
+    private static array $routes = [];
+    public static function get(string $uri, array $action): void
     {
-        echo "URI: " . $uri . " - " . "CLASSE: " . $action[0] . " - FUNCTION: " . $action[1];
+        self::add('GET', $uri, $action);
     }
 
-    public static function post($uri, $action) {}
+    public static function post(string $uri, array $action): void
+    {
+        self::add('POST', $uri, $action);
+    }
 
-    public static function dispatch()
+    private static function add(string $method, string $uri, array $action): void
+    {
+
+        $routeObject = \App\DTO\Route::make($method, $uri, $action);
+
+        self::$routes[$method][$uri] = $routeObject;
+    }
+
+    public static function dispatch(): void
     {
         $uri = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
 
-        echo $uri . " - " . $method;
+        if (!isset(self::$routes[$method][$uri])) {
+            echo "404 - Página não encontrada";
+            return;
+        }
+
+        $route = self::$routes[$method][$uri];
+
+        $routeController = $route->controller;
+        $routeAction = $route->action;
+
+        $controller = new $routeController;
+        $controller->$routeAction();
     }
 }
