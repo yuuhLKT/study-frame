@@ -7,6 +7,6 @@ class HomeController
     public function index()
     {
         $hello = "Hello World from Controller";
-        return $hello;
+        echo $hello;
     }
 }
