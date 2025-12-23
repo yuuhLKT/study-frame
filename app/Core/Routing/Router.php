@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core;
+namespace App\Core\Routing;
 
 use App\Contracts\RouterInterface;
 
@@ -22,7 +22,7 @@ class Router implements RouterInterface
     private static function add(string $method, string $uri, array $action): void
     {
 
-        $routeObject = \App\DTO\Route::make($method, $uri, $action);
+        $routeObject = \App\Core\Routing\Route::make($method, $uri, $action);
 
         self::$routes[$method][$uri] = $routeObject;
     }
