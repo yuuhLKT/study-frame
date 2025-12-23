@@ -39,10 +39,9 @@ class Router implements RouterInterface
 
         $route = self::$routes[$method][$uri];
 
-        $routeController = $route->controller;
-        $routeAction = $route->action;
+        $controller = new $route->controller;
+        $action = $route->action;
 
-        $controller = new $routeController;
-        $controller->$routeAction();
+        call_user_func(array($controller, $action));
     }
 }
