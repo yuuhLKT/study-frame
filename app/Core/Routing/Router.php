@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Core\Routing;
 
 use App\Contracts\RouterInterface;
+use App\Core\Http\Request;
+use App\Core\Http\Response;
 
 class Router implements RouterInterface
 {
@@ -27,14 +29,13 @@ class Router implements RouterInterface
         self::$routes[$method][$uri] = $routeObject;
     }
 
-    public static function dispatch(): void
+    public static function dispatch(Request $request): Response
     {
-        $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
-        $method = $_SERVER['REQUEST_METHOD'];
+        $uri = $request->getUri();
+        $method = $request->getMethod();
 
         if (!isset(self::$routes[$method][$uri])) {
-            echo "404 - Página não encontrada";
-            return;
+            return Response::json(['error' => '404 Not Found'], 404);
         }
 
         $route = self::$routes[$method][$uri];
@@ -42,6 +43,8 @@ class Router implements RouterInterface
         $controller = new $route->controller;
         $action = $route->action;
 
-        call_user_func(array($controller, $action));
+        $response = call_user_func_array([$controller, $action], [$request]);
+
+        return $response;
     }
 }

@@ -2,15 +2,21 @@
 
 namespace App\Controllers;
 
+use App\Core\Config\Env;
 use App\Core\Http\Request;
+use App\Core\Http\Response;
 
 class TestController
 {
 
-    public function index()
+    public function index(Request $request): Response
     {
-        $request = Request::capture();
 
-        echo json_encode($request->getBody());
+        $data = [
+            'Olá' => "Mundo",
+            'From' => "TestController"
+        ];
+
+        return Response::json($data, 200);
     }
 }
