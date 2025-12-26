@@ -55,4 +55,19 @@ readonly class Request
     {
         return $this->uri;
     }
+
+    public function getQueryParams()
+    {
+        return $this->queryParams;
+    }
+
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    public function getBody()
+    {
+        return $this->headers;
+    }
 }
