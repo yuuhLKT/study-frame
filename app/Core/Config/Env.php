@@ -24,7 +24,38 @@ class Env implements EnvInterface
                 continue;
             }
 
-            echo $line;
+            if (strpos($line, '=') === false) {
+                continue;
+            }
+
+            $parts = explode("=", $line, 2);
+            $key = trim($parts[0]);
+            $value = trim($parts[1]);
+            $value = trim($value, '"');
+
+            $_ENV[$key] = $value;
+            putenv("$key=$value");
         }
+    }
+
+    public static function get(string $key, mixed $default = null): mixed
+    {
+        if (array_key_exists($key, $_ENV)) {
+            $value = $_ENV[$key];
+        } else {
+            $value = getenv($key);
+
+            if ($value === false) {
+                return $default;
+            }
+        }
+
+        return match (strtolower((string)$value)) {
+            'true', '(true)' => true,
+            'false', '(false)' => false,
+            'empty', '(empty)' => '',
+            'null', '(null)' => null,
+            default => $value,
+        };
     }
 }

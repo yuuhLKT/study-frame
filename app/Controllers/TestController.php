@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
 use App\Core\Config\Env;
@@ -11,10 +13,12 @@ class TestController
 
     public function index(Request $request): Response
     {
+        $env = Env::get('TesteENV', 123);
 
         $data = [
             'Olá' => "Mundo",
-            'From' => "TestController"
+            'From' => "TestController",
+            'ENV' => $env
         ];
 
         return Response::json($data, 200);

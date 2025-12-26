@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\HomeController;
 use App\Controllers\TestController;
+use App\Core\Config\Env;
 use App\Core\Http\Request;
 use App\Core\Routing\Router;
+
+Env::load(__DIR__ . '/../.env');
 
 $request = Request::capture();
 

@@ -7,4 +7,5 @@ namespace App\Contracts;
 interface EnvInterface
 {
     public static function load(string $path): void;
+    public static function get(string $key, mixed $default = null): mixed;
 }
