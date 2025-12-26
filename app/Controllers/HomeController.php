@@ -2,11 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Core\Http\Response;
+
 class HomeController
 {
-    public function index()
+    public function index(): Response
     {
-        $hello = "Hello World from Controller";
-        echo $hello;
+        return Response::html("<h1>Hello World, from HomeController</h1>", 200);
     }
 }
