@@ -68,6 +68,6 @@ readonly class Request
 
     public function getBody()
     {
-        return $this->headers;
+        return $this->body;
     }
 }
